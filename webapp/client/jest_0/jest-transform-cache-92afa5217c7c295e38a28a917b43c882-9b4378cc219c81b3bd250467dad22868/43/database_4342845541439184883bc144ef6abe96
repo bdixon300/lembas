@@ -1,0 +1,52 @@
+"use strict";Object.defineProperty(exports, "__esModule", { value: true });let getUserRecipeArray = (() => {var _ref = _asyncToGenerator(
+
+    function* (userID) {
+        console.log("ASYNC FUNC");
+
+        let localURI = "";
+        try {
+            localURI = yield _index2.default.get("/query/getRecipe", {});
+            let arrayLength = localURI.data.data.length - 10;
+            localURI = localURI.data.data[arrayLength].uri;
+            return localURI;
+        }
+        catch (error) {
+            console.log(error);
+            return "ERROR";
+        }
+    });return function getUserRecipeArray(_x) {return _ref.apply(this, arguments);};})();let postRecipeData = (() => {var _ref2 = _asyncToGenerator(
+
+    function* (uriAdd) {
+        console.log("POSTING RECIPE DATA");
+        _index2.default.post("/query/postRecipe", {
+            data: {
+                userID: "0",
+                uri: uriAdd } });
+
+
+    });return function postRecipeData(_x2) {return _ref2.apply(this, arguments);};})();var _index = require("axios/index");var _index2 = _interopRequireDefault(_index);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function _asyncToGenerator(fn) {return function () {var gen = fn.apply(this, arguments);return new Promise(function (resolve, reject) {function step(key, arg) {try {var info = gen[key](arg);var value = info.value;} catch (error) {reject(error);return;}if (info.done) {resolve(value);} else {return Promise.resolve(value).then(function (value) {step("next", value);}, function (err) {step("throw", err);});}}return step("next");});};}
+
+function getRecipeFromURI(uri) {
+    console.log("GETTING USER RECIPE URI");
+    let meals_local = "";
+    _index2.default.
+    get("/searchBar/URI", {
+        params: {
+            arg: uri } }).
+
+
+    then(response => {
+        console.log("GOT RESPONSE DATA");
+        console.log(response);
+        meals_local = response.data.recipe;
+    }).
+    catch(function (error) {
+        console.log(error);
+    });
+    return meals_local;
+}exports.default =
+
+{
+    userRecipeArray: getUserRecipeArray,
+    userRecipeURI: getRecipeFromURI,
+    postRecipe: postRecipeData };

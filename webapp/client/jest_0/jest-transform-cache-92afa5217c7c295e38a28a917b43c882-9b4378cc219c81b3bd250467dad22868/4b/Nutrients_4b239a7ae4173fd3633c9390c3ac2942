@@ -1,0 +1,70 @@
+"use strict";Object.defineProperty(exports, "__esModule", { value: true });const ALL_NUTRIENTS = [
+"Calcium",
+"Carbs",
+"Cholesterol",
+"Monounsaturated Fats",
+"Polyunsaturated Fats",
+"Saturated Fats",
+"Fat",
+"Trans Fats",
+"Iron",
+"Fibre",
+"Folate",
+"Potassium",
+"Magnesium",
+"Sodium",
+"Energy",
+"Niacin (B3)",
+"Phosphorus",
+"Protein",
+"Riboflavin (B2)",
+"Sugars",
+"Thiamin (B1)",
+"Vitamin E",
+"Vitamin A",
+"Vitamin B12",
+"Vitamin B6",
+"Vitamin C",
+"Vitamin D",
+"Vitamin K"];
+
+
+const DEFAULT_NUTRIENTS = [
+"Calcium",
+"Carbs",
+"Fat",
+"Fibre",
+"Sodium",
+"Energy",
+"Protein",
+"Sugars"];
+
+
+function getNutrientUnit(nutrient) {
+  switch (nutrient) {
+    case "Energy":
+      return "kcal";
+    case "Carbs":
+    case "Monounsaturated Fats":
+    case "Polyunsaturated Fats":
+    case "Saturated Fats":
+    case "Fat":
+    case "Trans Fats":
+    case "Fibre":
+    case "Protein":
+    /* falls through */
+    case "Sugars":
+      return "g";
+    case "Folate":
+    case "Vitamin A":
+    case "Vitamin B12":
+    case "Vitamin D":
+    /* falls through */
+    case "Vitamin K":
+      return "µg";
+    default:
+      return "mg";}
+
+}exports.
+
+getNutrientUnit = getNutrientUnit;exports.ALL_NUTRIENTS = ALL_NUTRIENTS;exports.DEFAULT_NUTRIENTS = DEFAULT_NUTRIENTS;

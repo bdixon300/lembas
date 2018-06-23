@@ -1,0 +1,87 @@
+"use strict";Object.defineProperty(exports, "__esModule", { value: true });var _jsxFileName = "/home/ben/Documents/UniversityYear2Work/coursework/webapp/client/src/App.js";var _react = require("react");var _react2 = _interopRequireDefault(_react);
+var _background = require("./assets/background.png");var _background2 = _interopRequireDefault(_background);
+var _logo = require("./assets/logo.svg");var _logo2 = _interopRequireDefault(_logo);
+require("./App.css");
+var _MyWeek = require("./MainComponents/MyWeek/MyWeek");var _MyWeek2 = _interopRequireDefault(_MyWeek);
+var _Goals = require("./MainComponents/Goals");var _Goals2 = _interopRequireDefault(_Goals);
+var _MyMealPlans = require("./MainComponents/MyMealPlans");var _MyMealPlans2 = _interopRequireDefault(_MyMealPlans);
+var _MyRecipes = require("./MainComponents/MyRecipes");var _MyRecipes2 = _interopRequireDefault(_MyRecipes);
+var _CreateMealPlan = require("./MainComponents/CreateMealPlan");var _CreateMealPlan2 = _interopRequireDefault(_CreateMealPlan);
+var _SideBar = require("./SideBar/SideBar");var _SideBar2 = _interopRequireDefault(_SideBar);
+var _SearchBar = require("./SearchBar/SearchBar");var _SearchBar2 = _interopRequireDefault(_SearchBar);
+var _SearchResults = require("./MainComponents/SearchResults");var _SearchResults2 = _interopRequireDefault(_SearchResults);
+var _Settings = require("./Settings/Settings");var _Settings2 = _interopRequireDefault(_Settings);
+var _reactBootstrap = require("react-bootstrap");function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+
+class App extends _react.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      selected: "week",
+      loggedIn: true,
+      currentResults: null };
+
+    this.changePage = this.changePage.bind(this);
+    this.searchPage = this.searchPage.bind(this);
+  }
+
+  changePage(page) {
+    this.setState({ selected: page });
+  }
+
+  searchPage(page, data) {
+    this.setState({
+      selected: page,
+      currentResults: data });
+
+  }
+
+  render() {
+    const mainComponent = (page => {
+      switch (page) {
+        case "goals":
+          return _react2.default.createElement(_Goals2.default, { __source: { fileName: _jsxFileName, lineNumber: 43 }, __self: this });
+        case "week":
+          return _react2.default.createElement(_MyWeek2.default, { __source: { fileName: _jsxFileName, lineNumber: 45 }, __self: this });
+        case "SearchResults":
+          return _react2.default.createElement(_SearchResults2.default, { searchResults: this.state.currentResults, __source: { fileName: _jsxFileName, lineNumber: 47 }, __self: this });
+        case "myMealPlans":
+          return _react2.default.createElement(_MyMealPlans2.default, { __source: { fileName: _jsxFileName, lineNumber: 49 }, __self: this });
+        case "myRecipes":
+          return _react2.default.createElement(_MyRecipes2.default, { __source: { fileName: _jsxFileName, lineNumber: 51 }, __self: this });
+        case "createMealPlan":
+          return _react2.default.createElement(_CreateMealPlan2.default, { __source: { fileName: _jsxFileName, lineNumber: 53 }, __self: this });
+        default:
+          return null;}
+
+    })(this.state.selected);
+    return this.state.loggedIn ?
+    _react2.default.createElement("div", { className: "App", style: { backgroundImage: `url(${_background2.default})`, backgroundSize: 'cover', backgroundRepeat: 'no-repeat' }, __source: { fileName: _jsxFileName, lineNumber: 59 }, __self: this },
+      _react2.default.createElement(_reactBootstrap.Grid, { fluid: true, style: { paddingLeft: 2, paddingRight: 0 }, __source: { fileName: _jsxFileName, lineNumber: 60 }, __self: this },
+        _react2.default.createElement(_reactBootstrap.Row, { __source: { fileName: _jsxFileName, lineNumber: 61 }, __self: this },
+          _react2.default.createElement(_reactBootstrap.Col, { sm: 2, style: { height: '98vh', border: ' 0.05em solid black', backgroundColor: 'white' }, __source: { fileName: _jsxFileName, lineNumber: 62 }, __self: this },
+            _react2.default.createElement(_reactBootstrap.Image, { src: _logo2.default, responsive: true, width: '2000vh', style: { marginLeft: 6 }, __source: { fileName: _jsxFileName, lineNumber: 63 }, __self: this }),
+            _react2.default.createElement(_SideBar2.default, {
+              selected: this.state.selected,
+              onClick: this.changePage, __source: { fileName: _jsxFileName, lineNumber: 64 }, __self: this })),
+
+
+          _react2.default.createElement(_reactBootstrap.Col, { sm: 9, __source: { fileName: _jsxFileName, lineNumber: 69 }, __self: this },
+            _react2.default.createElement(_SearchBar2.default, { onClick: this.searchPage, __source: { fileName: _jsxFileName, lineNumber: 70 }, __self: this }),
+            _react2.default.createElement("p", { __source: { fileName: _jsxFileName, lineNumber: 71 }, __self: this }),
+            _react2.default.createElement("p", { __source: { fileName: _jsxFileName, lineNumber: 72 }, __self: this }),
+            mainComponent),
+
+          _react2.default.createElement(_reactBootstrap.Col, { sm: 1, __source: { fileName: _jsxFileName, lineNumber: 75 }, __self: this },
+            _react2.default.createElement(_Settings2.default, { __source: { fileName: _jsxFileName, lineNumber: 76 }, __self: this }))))) :
+
+
+
+
+
+    _react2.default.createElement("p", { __source: { fileName: _jsxFileName, lineNumber: 82 }, __self: this }, "Login failed");
+
+  }}exports.default =
+
+
+App;

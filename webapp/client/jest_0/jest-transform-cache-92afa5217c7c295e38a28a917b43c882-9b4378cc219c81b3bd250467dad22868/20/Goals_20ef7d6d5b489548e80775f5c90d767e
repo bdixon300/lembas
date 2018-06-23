@@ -1,0 +1,170 @@
+"use strict";Object.defineProperty(exports, "__esModule", { value: true });var _jsxFileName = "/home/ben/Documents/UniversityYear2Work/coursework/webapp/client/src/MainComponents/Goals.js";var _react = require("react");var _react2 = _interopRequireDefault(_react);
+var _Nutrients = require("../Nutrition/Nutrients");
+var _reactBootstrap = require("react-bootstrap");
+
+
+
+
+
+
+
+var _reactCustomScrollbars = require("react-custom-scrollbars");function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+
+function PersonalDataEntry(props) {
+  return (
+    _react2.default.createElement(_reactBootstrap.FormGroup, { controlId: props.controlId, __source: { fileName: _jsxFileName, lineNumber: 15 }, __self: this },
+      _react2.default.createElement(_reactBootstrap.ControlLabel, { __source: { fileName: _jsxFileName, lineNumber: 16 }, __self: this }, props.label),
+      _react2.default.createElement(_reactBootstrap.FormControl, { type: "text", value: props.value, onChange: props.onChange, __source: { fileName: _jsxFileName, lineNumber: 17 }, __self: this })));
+
+
+}
+
+function NutrientGoal(props) {
+  const nutrient = props.nutrient;
+  return (
+    _react2.default.createElement("div", { __source: { fileName: _jsxFileName, lineNumber: 25 }, __self: this },
+      _react2.default.createElement(_reactBootstrap.Form, { inline: true, __source: { fileName: _jsxFileName, lineNumber: 26 }, __self: this },
+        _react2.default.createElement(_reactBootstrap.FormGroup, { controlId: "setGoals" + nutrient, __source: { fileName: _jsxFileName, lineNumber: 27 }, __self: this },
+          _react2.default.createElement(_reactBootstrap.ControlLabel, { __source: { fileName: _jsxFileName, lineNumber: 28 }, __self: this },
+            nutrient, " (in ", (0, _Nutrients.getNutrientUnit)(nutrient), ")"),
+          " ",
+          _react2.default.createElement(_reactBootstrap.FormControl, {
+            type: "text",
+            value: props.value,
+            onChange: props.onValueChange.bind(this, nutrient), __source: { fileName: _jsxFileName, lineNumber: 31 }, __self: this })),
+
+        " ",
+        _react2.default.createElement(_reactBootstrap.FormGroup, { controlId: "track" + nutrient, __source: { fileName: _jsxFileName, lineNumber: 37 }, __self: this },
+          _react2.default.createElement(_reactBootstrap.Checkbox, { onChange: props.onTrackingChange.bind(this, nutrient), __source: { fileName: _jsxFileName, lineNumber: 38 }, __self: this }, "Track")))));
+
+
+
+
+
+
+}
+
+class Goals extends _react.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      preset: "custom",
+      age: "",
+      height: "",
+      weight: "",
+      goals: _Nutrients.ALL_NUTRIENTS.map(ntr => 0),
+      tracking: _Nutrients.ALL_NUTRIENTS.map(ntr => false) };
+
+    this.submitGoals = this.submitGoals.bind(this);
+    this.submitSettings = this.submitSettings.bind(this);
+    this.handleChangePreset = this.handleChangePreset.bind(this);
+    this.handleChangeAge = this.handleChangeAge.bind(this);
+    this.handleChangeWeight = this.handleChangeWeight.bind(this);
+    this.handleChangeHeight = this.handleChangeHeight.bind(this);
+    this.handleGoalChange = this.handleGoalChange.bind(this);
+    this.handleTrackingChange = this.handleTrackingChange.bind(this);
+  }
+
+  componentDidMount() {
+    // TODO: load goals from database of user goals
+  }
+
+  submitGoals() {
+    // TODO: submit goals to database of user goals
+  }
+
+  submitSettings(e) {
+    e.preventDefault();
+    // TODO: submit settings, change goals if preset is not custom
+  }
+
+  handleChangePreset(e) {
+    this.setState({ preset: e.target.value });
+  }
+
+  handleChangeAge(e) {
+    this.setState({ age: e.target.value });
+  }
+
+  handleChangeHeight(e) {
+    this.setState({ height: e.target.value });
+  }
+
+  handleChangeWeight(e) {
+    this.setState({ weight: e.target.value });
+  }
+
+  handleGoalChange(nutrient, e) {
+    let newGoals = this.state.goals.slice();
+    newGoals[_Nutrients.ALL_NUTRIENTS.indexOf(nutrient)] = e.target.value;
+    this.setState({ goals: newGoals });
+  }
+
+  handleTrackingChange(nutrient, e) {
+    let newTracking = this.state.tracking.slice();
+    const idx = _Nutrients.ALL_NUTRIENTS.indexOf(nutrient);
+    newTracking[idx] = !newTracking[idx];
+    this.setState({ tracking: newTracking });
+  }
+
+  render() {
+    return (
+      _react2.default.createElement("div", { style: { overflow: 'auto', height: '40em' }, __source: { fileName: _jsxFileName, lineNumber: 112 }, __self: this },
+        _react2.default.createElement("form", { __source: { fileName: _jsxFileName, lineNumber: 113 }, __self: this },
+          _react2.default.createElement(_reactBootstrap.FormGroup, { controlId: "presetSelect", __source: { fileName: _jsxFileName, lineNumber: 114 }, __self: this },
+            _react2.default.createElement(_reactBootstrap.ControlLabel, { __source: { fileName: _jsxFileName, lineNumber: 115 }, __self: this }, "Presets"),
+            _react2.default.createElement(_reactBootstrap.FormControl, {
+                componentClass: "select",
+                defaultValue: this.state.preset,
+                onChange: this.handleChangePreset, __source: { fileName: _jsxFileName, lineNumber: 116 }, __self: this },
+
+              _react2.default.createElement("option", { value: "health", __source: { fileName: _jsxFileName, lineNumber: 121 }, __self: this }, "Be Healthy*"),
+              _react2.default.createElement("option", { value: "muscle", __source: { fileName: _jsxFileName, lineNumber: 122 }, __self: this }, "Build Muscle"),
+              _react2.default.createElement("option", { value: "slim", __source: { fileName: _jsxFileName, lineNumber: 123 }, __self: this }, "Get Slim"),
+              _react2.default.createElement("option", { value: "custom", __source: { fileName: _jsxFileName, lineNumber: 124 }, __self: this }, "Custom"))),
+
+
+          _react2.default.createElement(PersonalDataEntry, {
+            controlId: "enterAge",
+            label: "Age",
+            value: this.state.age,
+            onChange: this.handleChangeAge, __source: { fileName: _jsxFileName, lineNumber: 127 }, __self: this }),
+
+          _react2.default.createElement(PersonalDataEntry, {
+            controlId: "enterHeight",
+            label: "Height (in cm)",
+            value: this.state.height,
+            onChange: this.handleChangeHeight, __source: { fileName: _jsxFileName, lineNumber: 133 }, __self: this }),
+
+          _react2.default.createElement(PersonalDataEntry, {
+            controlId: "enterWeight",
+            label: "Weight (in kg)",
+            value: this.state.weight,
+            onChange: this.handleChangeWeight, __source: { fileName: _jsxFileName, lineNumber: 139 }, __self: this }),
+
+          _react2.default.createElement(_reactBootstrap.Button, { type: "submit", onClick: this.submitSettings, __source: { fileName: _jsxFileName, lineNumber: 145 }, __self: this }, "Save Settings")),
+
+
+
+        _react2.default.createElement("p", { __source: { fileName: _jsxFileName, lineNumber: 149 }, __self: this }, " *Based on Public Health England's Dietary Recommendations "),
+        _Nutrients.ALL_NUTRIENTS.map(ntr =>
+        _react2.default.createElement("div", { key: ntr, __source: { fileName: _jsxFileName, lineNumber: 151 }, __self: this },
+          _react2.default.createElement(NutrientGoal, {
+            nutrient: ntr,
+            value: this.state.goals[_Nutrients.ALL_NUTRIENTS.indexOf(ntr)],
+            onValueChange: this.handleGoalChange,
+            tracking: this.state.tracking[_Nutrients.ALL_NUTRIENTS.indexOf(ntr)],
+            onTrackingChange: this.handleTrackingChange, __source: { fileName: _jsxFileName, lineNumber: 152 }, __self: this }),
+
+          _react2.default.createElement("br", { __source: { fileName: _jsxFileName, lineNumber: 159 }, __self: this }))),
+
+
+        _react2.default.createElement(_reactBootstrap.Button, { type: "submit", onClick: this.submitGoals, __source: { fileName: _jsxFileName, lineNumber: 162 }, __self: this }, "Save Goals")));
+
+
+
+
+  }}exports.default =
+
+
+Goals;

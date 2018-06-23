@@ -1,0 +1,21 @@
+.Preset-selector {
+    background-color: white;
+}
+
+.Nutrient-goal {
+    background-color: ghostwhite;
+    height: 20em;
+    border-radius: 1em;
+}
+
+.data-label {
+    color: black;
+    font-size: 1.4vw;
+}
+
+.Goals-list {
+    background-color: ghostwhite;
+    margin-top: 2em;
+    height: 16em;
+    border-radius: 2em;
+}

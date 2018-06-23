@@ -1,0 +1,107 @@
+"use strict";Object.defineProperty(exports, "__esModule", { value: true });exports.DAYS = exports.MYWEEK_TABS = undefined;var _jsxFileName = "/home/ben/Documents/UniversityYear2Work/coursework/webapp/client/src/MainComponents/MyWeek/MyWeek.js";var _react = require("react");var _react2 = _interopRequireDefault(_react);
+var _reactBootstrap = require("react-bootstrap");
+var _MyWeekTabContents = require("./MyWeekTabContents");var _MyWeekTabContents2 = _interopRequireDefault(_MyWeekTabContents);
+require("./MyWeek.css");
+var _index = require("axios/index");var _index2 = _interopRequireDefault(_index);
+var _reactSortableHoc = require("react-sortable-hoc");
+var _reactCustomScrollbars = require("react-custom-scrollbars");
+var _database = require("../../BackendCalls/database");var _database2 = _interopRequireDefault(_database);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function _asyncToGenerator(fn) {return function () {var gen = fn.apply(this, arguments);return new Promise(function (resolve, reject) {function step(key, arg) {try {var info = gen[key](arg);var value = info.value;} catch (error) {reject(error);return;}if (info.done) {resolve(value);} else {return Promise.resolve(value).then(function (value) {step("next", value);}, function (err) {step("throw", err);});}}return step("next");});};}
+
+
+const MYWEEK_TABS = exports.MYWEEK_TABS = [
+"Nutrition",
+"Monday",
+"Tuesday",
+"Wednesday",
+"Thursday",
+"Friday",
+"Saturday",
+"Sunday"];
+
+
+const DAYS = exports.DAYS = MYWEEK_TABS.slice(1);
+
+class MyWeek extends _react.Component {
+  constructor(props) {
+    super(props);
+    this.handleSelect = this.handleSelect.bind(this);
+    this.handleReorder = this.handleReorder.bind(this);
+    this.getUserRecipeArray = this.getUserRecipeArray.bind(this);
+    this.handleSave = this.handleSave.bind(this);
+    this.state = {
+      selectedTab: MYWEEK_TABS[0],
+      meals: [["sdas"], [], [], [], [], [], []],
+      recipe: {} };
+
+  }
+
+  componentDidMount() {
+    console.log("MOUTING");
+    this.getUserRecipeArray(0);
+    //console.log(this.state.meals[0])
+  }
+
+  getUserRecipeArray(userID) {var _this = this;return _asyncToGenerator(function* () {
+      console.log("GET USER RECIPE ARRAY");
+      const localURI = yield _database2.default.userRecipeArray(userID);
+      console.log(localURI);
+      _this.setState({ meals: [[localURI], [], [], [], [], [], []] });})();
+  }
+
+  getRecipeFromURI(uri) {
+    let meals_local = _database2.default.userRecipeURI(uri);
+    this.setState({ recipe: meals_local });
+  }
+
+  handleSelect(selected) {
+    this.setState({ selectedTab: selected });
+  }
+
+  handleReorder(day, fromIndex, toIndex) {
+    let newMeals = this.state.meals.slice();
+    newMeals[DAYS.indexOf(day)] = (0, _reactSortableHoc.arrayMove)(
+    newMeals[DAYS.indexOf(day)],
+    fromIndex,
+    toIndex);
+
+    this.setState({ meals: newMeals });
+  }
+
+  handleSave(e) {
+    e.preventDefault();
+    console.log("todo: save to database");
+    // TODO: send new meals state to database
+  }
+
+  render() {
+    return (
+      _react2.default.createElement("div", { __source: { fileName: _jsxFileName, lineNumber: 78 }, __self: this },
+        _react2.default.createElement(_reactBootstrap.Button, { onClick: this.handleSave, style: { marginLeft: 900 }, __source: { fileName: _jsxFileName, lineNumber: 79 }, __self: this }, "Save"),
+        _react2.default.createElement("p", { __source: { fileName: _jsxFileName, lineNumber: 80 }, __self: this }),
+        _react2.default.createElement(_reactBootstrap.Tabs, {
+            activeKey: this.state.selectedTab,
+            onSelect: this.handleSelect,
+            id: "myweek-dates",
+            className: "MyWeek",
+            style: { borderRadius: '1em' }, __source: { fileName: _jsxFileName, lineNumber: 81 }, __self: this },
+
+          MYWEEK_TABS.map(tab =>
+          _react2.default.createElement(_reactBootstrap.Tab, { key: tab,
+              eventKey: tab,
+              title: tab,
+              style: { backgroundColor: 'white', overflow: 'auto', height: '40em', borderBottomLeftRadius: '1em',
+                borderBottomRightRadius: '1em' }, __source: { fileName: _jsxFileName, lineNumber: 89 }, __self: this },
+            _react2.default.createElement(_MyWeekTabContents2.default, {
+              tab: tab,
+              meals: this.state.meals,
+              onReorder: this.handleReorder, __source: { fileName: _jsxFileName, lineNumber: 94 }, __self: this }))))));
+
+
+
+
+
+
+  }}exports.default =
+
+
+MyWeek;

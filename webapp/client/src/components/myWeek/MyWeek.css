@@ -1,0 +1,32 @@
+.My-week {
+    background-color: ghostwhite;
+    border-radius: 0.25em;
+    -webkit-transform: translate(-50%, 0);
+    left: 50%;
+    width: 80vw;
+    height: 30vw;
+    position: relative;
+    font-size: 1.3em;
+    margin-top: 1.25vw;
+}
+.Tab {
+    background-color: ghostwhite;
+    height: 30vw;
+    width: 80vw;
+    border-bottom-left-radius: 1em;
+    border-bottom-right-radius: 1em;
+}
+
+.Pie-chart {
+    width: 100vh;
+    -webkit-transform: translate(-50%, 0);
+    left: 50%;
+}
+
+.My-week-buttons {
+    margin-left: 77em;
+}
+
+.My-week ul > li > a {
+   color: black;
+}

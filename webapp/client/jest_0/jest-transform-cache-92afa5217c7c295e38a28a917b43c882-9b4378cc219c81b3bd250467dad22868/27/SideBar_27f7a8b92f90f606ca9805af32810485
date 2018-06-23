@@ -1,0 +1,34 @@
+"use strict";Object.defineProperty(exports, "__esModule", { value: true });var _jsxFileName = "/home/ben/Documents/UniversityYear2Work/coursework/webapp/client/src/SideBar/SideBar.js";var _react = require("react");var _react2 = _interopRequireDefault(_react);
+var _reactBootstrap = require("react-bootstrap");function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+
+class SideBar extends _react.Component {
+  constructor(props) {
+    super(props);
+    this.handleClick = this.handleClick.bind(this);
+  }
+
+  handleClick(selected) {
+    this.props.onClick(selected);
+  }
+
+  render() {
+    const selected = this.props.selected;
+    return (
+      _react2.default.createElement(_reactBootstrap.Nav, {
+          bsStyle: "pills",
+          stacked: true,
+          activeKey: selected,
+          onSelect: this.handleClick,
+          style: { paddingLeft: 12 }, __source: { fileName: _jsxFileName, lineNumber: 17 }, __self: this },
+
+        _react2.default.createElement(_reactBootstrap.NavItem, { eventKey: "week", __source: { fileName: _jsxFileName, lineNumber: 24 }, __self: this }, "My Week"),
+        _react2.default.createElement(_reactBootstrap.NavItem, { eventKey: "goals", __source: { fileName: _jsxFileName, lineNumber: 25 }, __self: this }, "Goals"),
+        _react2.default.createElement(_reactBootstrap.NavItem, { eventKey: "myMealPlans", __source: { fileName: _jsxFileName, lineNumber: 26 }, __self: this }, "My Meal Plans"),
+        _react2.default.createElement(_reactBootstrap.NavItem, { eventKey: "myRecipes", __source: { fileName: _jsxFileName, lineNumber: 27 }, __self: this }, "My Recipes"),
+        _react2.default.createElement(_reactBootstrap.NavItem, { eventKey: "createMealPlan", __source: { fileName: _jsxFileName, lineNumber: 28 }, __self: this }, "Create Meal Plan")));
+
+
+  }}exports.default =
+
+
+SideBar;

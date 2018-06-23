@@ -1,0 +1,151 @@
+"use strict";Object.defineProperty(exports, "__esModule", { value: true });var _jsxFileName = "/home/ben/Documents/UniversityYear2Work/coursework/webapp/client/src/MainComponents/MyWeek/MyWeekTabContents.js";var _react = require("react");var _react2 = _interopRequireDefault(_react);
+var _reactBootstrap = require("react-bootstrap");
+var _MyWeek = require("./MyWeek");
+var _reactSortableHoc = require("react-sortable-hoc");
+var _Nutrients = require("../../Nutrition/Nutrients");
+
+
+
+
+require("./MyWeek.css");function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+
+function MyWeekTabContents(props) {
+  const tab = props.tab;
+  return tab === "Nutrition" ?
+  _react2.default.createElement(NutritionTab, { mealPlan: props.meals, __source: { fileName: _jsxFileName, lineNumber: 15 }, __self: this }) :
+
+  _react2.default.createElement(DayTab, {
+    day: tab,
+    meals: props.meals[_MyWeek.DAYS.indexOf(tab)],
+    onReorder: props.onReorder, __source: { fileName: _jsxFileName, lineNumber: 17 }, __self: this });
+
+
+}
+
+function NutrientInformation(props) {
+  const nutrient = props.nutrient;
+  return (
+    _react2.default.createElement("p", { __source: { fileName: _jsxFileName, lineNumber: 28 }, __self: this }, "Average ",
+      nutrient, " per day: ", props.amount,
+      (0, _Nutrients.getNutrientUnit)(nutrient)));
+
+
+}
+
+/* Sums the matrix vertically, i.e. all entries with same index. */
+function verticallySumMatrix(a, b) {
+  return a.map((v, i) => v + b[i]);
+}
+
+/* See http://www.jacklmoore.com/notes/rounding-in-javascript/ */
+function roundToTwoDecimals(x) {
+  return Number(Math.round(x + "e2") + "e-2");
+}
+
+/* PLACEHOLDER */
+function getNutrientInformation(meal) {
+  return _Nutrients.ALL_NUTRIENTS.map(ntr => _Nutrients.ALL_NUTRIENTS.indexOf(ntr));
+}
+
+/*
+   * For each day in the mealplan, sums the nutrients for each meal in that day.
+   * With the sums of the nutrients for each day, calculates the average
+   * nutrients per day for the mealplan.
+   */
+function calculateAverageNutrientsPerDay(mealPlan) {
+  const zeroNutrients = _Nutrients.ALL_NUTRIENTS.map(ntr => 0);
+
+  return mealPlan.
+  map(day =>
+  day.
+  map(meal => getNutrientInformation(meal)).
+  reduce((a, b) => verticallySumMatrix(a, b), zeroNutrients)).
+
+  reduce((a, b) => verticallySumMatrix(a, b), zeroNutrients).
+  map(ntr => roundToTwoDecimals(ntr / _MyWeek.DAYS.length));
+}
+
+class NutritionTab extends _react.Component {
+  constructor(props) {
+    super(props);
+    this.state = { displayDefault: true };
+    this.changeDisplay = this.changeDisplay.bind(this);
+  }
+
+  changeDisplay() {
+    this.setState({ displayDefault: !this.state.displayDefault });
+  }
+
+  render() {
+    const avgNutrients = calculateAverageNutrientsPerDay(this.props.mealPlan);
+
+    const nutrientInfo = (nutrientSet =>
+    nutrientSet.map(ntr =>
+    _react2.default.createElement(NutrientInformation, {
+      key: ntr,
+      nutrient: ntr,
+      amount: avgNutrients[_Nutrients.ALL_NUTRIENTS.indexOf(ntr)], __source: { fileName: _jsxFileName, lineNumber: 84 }, __self: this })))(
+
+    this.state.displayDefault ? _Nutrients.DEFAULT_NUTRIENTS : _Nutrients.ALL_NUTRIENTS);
+
+    return (
+      _react2.default.createElement("div", { __source: { fileName: _jsxFileName, lineNumber: 92 }, __self: this },
+        _react2.default.createElement(_reactBootstrap.Button, { onClick: this.changeDisplay, __source: { fileName: _jsxFileName, lineNumber: 93 }, __self: this },
+          this.state.displayDefault ? "Show All" : "Show Main"),
+
+        _react2.default.createElement("ul", { __source: { fileName: _jsxFileName, lineNumber: 96 }, __self: this }, nutrientInfo)));
+
+
+  }}
+
+
+/* TODO: get data from edamam using uri */
+function DayTabEntry(props) {
+  return _react2.default.createElement("p", { __source: { fileName: _jsxFileName, lineNumber: 104 }, __self: this }, props.uri);
+}
+
+const SortableItem = (0, _reactSortableHoc.SortableElement)(({ value }) =>
+_react2.default.createElement("li", { __source: { fileName: _jsxFileName, lineNumber: 108 }, __self: undefined },
+  _react2.default.createElement(DayTabEntry, { uri: value, __source: { fileName: _jsxFileName, lineNumber: 109 }, __self: undefined })));
+
+
+
+const SortableList = (0, _reactSortableHoc.SortableContainer)(({ keys, items }) => {
+  return (
+    _react2.default.createElement("ul", { __source: { fileName: _jsxFileName, lineNumber: 115 }, __self: undefined },
+      items.map((value, index) =>
+      _react2.default.createElement(SortableItem, { key: keys[index], index: index, value: value, __source: { fileName: _jsxFileName, lineNumber: 117 }, __self: undefined }))));
+
+
+
+});
+
+class DayTab extends _react.Component {
+  constructor(props) {
+    super(props);
+    this.onSortEnd = this.onSortEnd.bind(this);
+  }
+
+  onSortEnd(e) {
+    this.props.onReorder(this.props.day, e.oldIndex, e.newIndex);
+  }
+
+  render() {
+    const meals = this.props.meals;
+    const mealKeys = [];
+    /* Ensures unique key for each meal */
+    meals.forEach(meal => {
+      let key = meal;
+      while (mealKeys.includes(key)) {
+        key += "_";
+      }
+      mealKeys.push(key);
+    });
+
+    return (
+      _react2.default.createElement(SortableList, { keys: mealKeys, items: meals, onSortEnd: this.onSortEnd, __source: { fileName: _jsxFileName, lineNumber: 146 }, __self: this }));
+
+  }}exports.default =
+
+
+MyWeekTabContents;
